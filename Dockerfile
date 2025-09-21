@@ -1,20 +1,11 @@
-# Base Python image
 FROM python:3.10-slim-bullseye
 
-# System update + git install
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y git && \
-    rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-# Workdir
-WORKDIR /jacpotflm-
+COPY . .
 
-# Copy start.sh and make executable
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir -U -r requirements.txt
+RUN chmod +x start.sh
 
-# Logging
-ENV PYTHONUNBUFFERED=1
-
-# Run the bot
-CMD ["/bin/bash", "/start.sh"]
+CMD ["./start.sh"]
