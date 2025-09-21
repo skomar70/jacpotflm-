@@ -1,7 +1,7 @@
 BOT_TOKEN = "8421980935:AAGfvuxdOdEqd4heXDWOtXJfw78Xr-A-zgw"
 
 # MongoDB URIs
-MONGO_URI_MAIN = "mongodb://username:password@host:port/dbname"
+MONGO_URI_MAIN = "mongodb+srv://ryamoni:YQs5Qy4CdpGpo8zS@cluster0.actpio3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 MONGO_URI_SECOND = ""  # inactive
 MONGO_URI_THIRD = ""   # inactive
 
