@@ -1,9 +1,4 @@
 #!/bin/bash
-# Start script for jacpotflm- Bot
-
-# Go to project directory
-cd /jacpotflm- || exit
-
-# Start the bot
+# Start bot from current WORKDIR
 echo "Bot Started...."
 python3 bot.py
