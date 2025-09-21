@@ -1,29 +1,29 @@
-BOT_TOKEN = "8421980935:AAGfvuxdOdEqd4heXDWOtXJfw78Xr-A-zgw"
+# Telegram Bot Config
+BOT_TOKEN = "8328198762:AAE2X2atmTOdSK_A1C0izn44q2b47FNqrxs"
+API_ID = 24776633
+API_HASH = "57b1f632044b4e718f5dce004a988d69"
 
-# MongoDB URIs
-MONGO_URI_MAIN = "mongodb+srv://ryamoni:YQs5Qy4CdpGpo8zS@cluster0.actpio3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-MONGO_URI_SECOND = ""  # inactive
-MONGO_URI_THIRD = ""   # inactive
-
-# Branding
-BRANDING_TEXT = "<a href='https://t.me/jacpot_film'>Jacpotfilm</a>"
-
-# Admins
-ADMINS = [7663112807]  # Telegram ID
+# Admin User
+ADMINS = [8248792819]  # Telegram ID
+LANG = "en"
+FIRST_NAME = "sk"
+LAST_NAME = "Omar"
 
 # Channels
-FILE_STORE_CHANNELS = [-1003088739514, -1003031967266]
-LOG_CHANNEL = -1002996983894 # log channel
-AUTH_CHANNEL = -1003085493913  # must join channel
+AUTH_CHANNEL = -1002926169752      # aouth channel
+FILE_STORE_CHANNELS = [-1003036018855, -1003086003339]  # file channel 1 & 2
+LOG_CHANNEL = -1002996983894       # log channel
 
-# Default links
+# Branding / Links (new group link)
+BRANDING_TEXT = "<a href='https://t.me/jacpotfilmm'>Jacpotfilm</a>"
 VERIFY_LINK = "https://yourdomain.com/direct_video.mp4"
-TUTORIAL_LINK = "https://t.me/your_tutorial"
+TUTORIAL_LINK = "https://t.me/jacpotfilmm"
 
-# Ads / Tutorial
+# Bot Settings
 ADS_ENABLED = True
 TUTORIAL_ENABLED = True
-
-# Timers
 VIDEO_EXPIRY_DAYS = 5
 AUTO_DELETE_TIME = 300  # seconds
+
+# MongoDB
+MONGO_URI_MAIN = "mongodb+srv://ryamoni:YQs5Qy4CdpGpo8zS@cluster0.actpio3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
