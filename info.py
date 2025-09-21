@@ -6,7 +6,7 @@ MONGO_URI_SECOND = ""  # inactive
 MONGO_URI_THIRD = ""   # inactive
 
 # Branding
-BRANDING_TEXT = "Jacpotfilm 👉 https://jacpotfilm.link"
+BRANDING_TEXT = "<a href='https://t.me/jacpot_film'>Jacpotfilm</a>"
 
 # Admins
 ADMINS = [7663112807]  # Telegram ID
