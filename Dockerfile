@@ -1,15 +1,26 @@
+# Base Python image
 FROM python:3.10.8-slim-buster
 
-RUN apt update && apt upgrade -y
-RUN apt install git -y
+# System update + git install
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y git && \
+    rm -rf /var/lib/apt/lists/*
 
+# Workdir
+RUN mkdir /jacpotflm-
+WORKDIR /jacpotflm-
+
+# Copy requirements and install
 COPY requirements.txt /requirements.txt
-RUN pip3 install -U pip && pip3 install -U -r /requirements.txt
+RUN pip3 install --no-cache-dir -U pip && \
+    pip3 install --no-cache-dir -r requirements.txt
 
-RUN mkdir /VJ-FILTER-BOT
-WORKDIR /VJ-FILTER-BOT
-COPY . /VJ-FILTER-BOT
+# Copy start.sh and make executable
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
+# Logging
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "bot.py"]
+# Run the bot
+CMD ["/bin/bash", "/start.sh"]
