@@ -13,8 +13,8 @@ ADMINS = [123456789]  # Telegram ID
 
 # Channels
 FILE_STORE_CHANNELS = [-1003088739514, -1003031967266]
-LOG_CHANNEL = -1004444444444  # log channel
-AUTH_CHANNEL = -1005555555555  # must join channel
+LOG_CHANNEL = -1002996983894 # log channel
+AUTH_CHANNEL = -1003085493913  # must join channel
 
 # Default links
 VERIFY_LINK = "https://yourdomain.com/direct_video.mp4"
