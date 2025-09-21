@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
 
-from info import BOT_TOKEN, BRANDING_TEXT, ADMINS, FILE_STORE_CHANNELS, LOG_CHANNEL, AUTO_DELETE_TIME, AUTH_CHANNEL
+from info import BOT_TOKEN, API_ID, API_HASH, BRANDING_TEXT, ADMINS, FILE_STORE_CHANNELS, LOG_CHANNEL, AUTO_DELETE_TIME, AUTH_CHANNEL
 from ads import get_verify_link, get_tutorial_link, update_links, save_user_data, log_to_channel
 from pymongo import MongoClient
 from info import MONGO_URI_MAIN
@@ -12,7 +12,12 @@ client_db = MongoClient(MONGO_URI_MAIN)
 db = client_db["vjbot"]
 channels_col = db["channels"]
 
-bot = Client("VJ-FILTER-BOT", bot_token=BOT_TOKEN)
+bot = Client(
+    "VJ-FILTER-BOT",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN
+)
 
 # --------------------- Utility ---------------------
 async def is_approved_chat(chat_id):
@@ -39,7 +44,7 @@ async def start(_, m):
     await m.reply_text(
         "Welcome!\nSearch your series or movie...",
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("Jacpotfilm", url="https://jacpotfilm.link")]
+            [InlineKeyboardButton("Jacpotfilm", url="https://t.me/jacpotfilmm")]
         ])
     )
 
@@ -76,7 +81,6 @@ async def season_handler(_, q):
 async def episode_handler(_, q):
     user_id = q.from_user.id
     
-    # Auth check
     if not await check_auth_channel(user_id):
         join_button = InlineKeyboardMarkup([
             [InlineKeyboardButton("Join Channel", url=f"https://t.me/{str(AUTH_CHANNEL).replace('-100','')}")],
@@ -85,7 +89,6 @@ async def episode_handler(_, q):
         await q.message.edit_text("❌ You must join our channel first to access videos!", reply_markup=join_button)
         return
 
-    # Normal flow
     ep = q.data.upper()
     verify_link = get_verify_link()
     tutorial = get_tutorial_link()
@@ -115,7 +118,6 @@ async def set_tutorial_link(_, m):
     update_links(tutorial_link=new_msg.text.strip())
     await m.reply_text(f"Tutorial link updated:\n{new_msg.text.strip()}")
 
-# --------------------- Connect / Approve / Disconnect ---------------------
 @bot.on_message(filters.command("connect") & filters.user(ADMINS))
 async def connect_channel(_, m):
     channel_id = int(m.text.split()[1])
