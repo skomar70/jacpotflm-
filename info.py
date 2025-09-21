@@ -1,4 +1,4 @@
-BOT_TOKEN = "YOUR_BOT_TOKEN"
+BOT_TOKEN = "8421980935:AAGfvuxdOdEqd4heXDWOtXJfw78Xr-A-zgw"
 
 # MongoDB URIs
 MONGO_URI_MAIN = "mongodb://username:password@host:port/dbname"
