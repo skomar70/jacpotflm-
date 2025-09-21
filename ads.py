@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from info import MONGO_URI_MAIN
+from info import MONGO_URI_MAIN, LOG_CHANNEL, VERIFY_LINK, TUTORIAL_LINK
 
 client = MongoClient(MONGO_URI_MAIN)
 db = client["vjbot"]
@@ -12,13 +12,13 @@ def get_verify_link():
     cfg = settings.find_one({"_id": "links"})
     if cfg and "verify_link" in cfg:
         return cfg["verify_link"]
-    return "https://yourdomain.com/direct_video.mp4"
+    return VERIFY_LINK
 
 def get_tutorial_link():
     cfg = settings.find_one({"_id": "links"})
     if cfg and "tutorial_link" in cfg:
         return cfg["tutorial_link"]
-    return "https://t.me/your_tutorial"
+    return TUTORIAL_LINK
 
 def update_links(verify_link=None, tutorial_link=None):
     data = {}
@@ -33,7 +33,6 @@ def save_user_data(user_id, data):
     users.update_one({"user_id": user_id}, {"$set": data}, upsert=True)
 
 def log_to_channel(bot, message_text):
-    from info import LOG_CHANNEL
     if LOG_CHANNEL:
         try:
             bot.send_message(LOG_CHANNEL, message_text)
