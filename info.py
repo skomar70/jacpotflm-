@@ -9,7 +9,7 @@ MONGO_URI_THIRD = ""   # inactive
 BRANDING_TEXT = "Jacpotfilm 👉 https://jacpotfilm.link"
 
 # Admins
-ADMINS = [123456789]  # Telegram ID
+ADMINS = [7663112807]  # Telegram ID
 
 # Channels
 FILE_STORE_CHANNELS = [-1003088739514, -1003031967266]
