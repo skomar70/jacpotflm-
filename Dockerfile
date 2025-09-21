@@ -1,5 +1,5 @@
 # Base Python image
-FROM python:3.10.8-slim-buster
+FROM python:3.10-slim-bullseye
 
 # System update + git install
 RUN apt-get update && apt-get upgrade -y && \
@@ -7,13 +7,7 @@ RUN apt-get update && apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Workdir
-RUN mkdir /jacpotflm-
 WORKDIR /jacpotflm-
-
-# Copy requirements and install
-COPY requirements.txt /requirements.txt
-RUN pip3 install --no-cache-dir -U pip && \
-    pip3 install --no-cache-dir -r requirements.txt
 
 # Copy start.sh and make executable
 COPY start.sh /start.sh
