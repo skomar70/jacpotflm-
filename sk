@@ -1,0 +1,29 @@
+ from datetime import datetime, timedelta
+from pymongo import MongoClient
+
+client = MongoClient("YOUR_MONGODB_URI")
+db = client["your_db"]
+col = db["verify_users"]
+
+def verify_user(user_id, minutes=60):   # default 60 মিনিট
+    expiry_time = datetime.utcnow() + timedelta(minutes=minutes)
+    col.update_one(
+        {"user_id": user_id},
+        {"$set": {
+            "verified": True,
+            "verified_at": datetime.utcnow(),
+            "expiry": expiry_time
+        }},
+        upsert=True
+    )
+    return f"✅ User {user_id} verified for {minutes} minutes."
+
+def is_verified(user_id):
+    user = col.find_one({"user_id": user_id})
+    if user and "expiry" in user:
+        if datetime.utcnow() < user["expiry"]:
+            return True   # মেয়াদ valid
+        else:
+            col.update_one({"user_id": user_id}, {"$set": {"verified": False}})
+            return False  # মেয়াদ শেষ
+    return False
