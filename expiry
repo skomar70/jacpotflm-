@@ -4,10 +4,10 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 # ---------------- Configuration ----------------
-app = Client("my_bot")  # Your bot session name
-ADMIN_ID = 123456789    # Admin Telegram ID
+app = Client("my_bot")  # Bot session name
+ADMIN_ID = 123456789    # আপনার টেলিগ্রাম আইডি
 DATA_FILE = "bot_data.json"
-VERIFICATION_EXPIRY = 3600  # 1 hour in seconds
+VERIFICATION_EXPIRY = 3600  # 1 ঘণ্টা
 
 # ---------------- Helper functions ----------------
 def load_data():
@@ -16,7 +16,7 @@ def load_data():
             return json.load(f)
     except:
         return {
-            "feature_status": False,
+            "feature_status": True,
             "earn_money_url": None,
             "verified_users": {}
         }
@@ -55,19 +55,19 @@ async def toggle_feature(client, message):
     await message.reply_text(f"🎛️ Earn Money feature is now {'ON' if data['feature_status'] else 'OFF'}")
 
 # ---------------- User Command ----------------
-@app.on_message(filters.command("start"))
-async def start(client, message):
+@app.on_message(filters.command("earn"))
+async def earn(client, message):
     user_id = str(message.from_user.id)
     now = int(time.time())
 
     if not data["feature_status"]:
-        await message.reply_text("⚠️ The Earn Money feature is currently OFF. Try later.")
+        await message.reply_text("⚠️ Earn Money feature is currently OFF.")
         return
 
     verified_at = data.get("verified_users", {}).get(user_id)
     if verified_at and now - verified_at <= VERIFICATION_EXPIRY:
         if data["earn_money_url"]:
-            await message.reply_text(f"✅ You are already verified! Here is your Earn Money link:\n{data['earn_money_url']}")
+            await message.reply_text(f"✅ Already verified! Here is your Earn Money link:\n{data['earn_money_url']}")
         else:
             await message.reply_text("⚠️ Admin hasn't set the Earn Money URL yet.")
         return
@@ -76,7 +76,7 @@ async def start(client, message):
         [InlineKeyboardButton("Earn Money 💰", callback_data="verify_user")]
     ])
     await message.reply_text(
-        "Welcome! Press the button below to Earn Money.",
+        "Welcome! Press the button below to Earn Money (Video verification required).",
         reply_markup=buttons
     )
 
@@ -92,21 +92,21 @@ async def handle_callback(client, callback_query):
 
     if callback_query.data == "verify_user":
         buttons = InlineKeyboardMarkup([
-            [InlineKeyboardButton("✅ I Verified", callback_data="get_video")],
+            [InlineKeyboardButton("✅ I Watched Video", callback_data="get_url")],
             [InlineKeyboardButton("❌ Cancel", callback_data="cancel")]
         ])
         await callback_query.message.edit_text(
-            "Please complete the verification to get the Earn Money link.",
+            "Please watch the video to verify before getting the Earn Money link.",
             reply_markup=buttons
         )
 
-    elif callback_query.data == "get_video":
+    elif callback_query.data == "get_url":
         if not data["earn_money_url"]:
             await callback_query.message.edit_text("⚠️ Admin hasn't set the Earn Money URL yet.")
             return
         data["verified_users"][user_id] = now
         save_data(data)
-        await callback_query.message.edit_text("✅ Verification passed! Here is your Earn Money link:")
+        await callback_query.message.edit_text("✅ Verification completed! Here is your Earn Money link:")
         await callback_query.message.reply_text(data["earn_money_url"])
 
     elif callback_query.data == "cancel":
