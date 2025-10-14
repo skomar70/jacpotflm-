@@ -1,0 +1,27 @@
+# Credits @TamilBots Edited By @SaravanKrish
+
+# Use Python 3.10 slim bullseye (cinemagoer এবং অন্য requirements supported)
+FROM python:3.10-slim-bullseye
+
+# Avoid interactive prompts during apt operations
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update & upgrade OS packages, install git, clean cache
+RUN apt update && apt upgrade -y && \
+    apt install -y git && \
+    apt clean && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (better layer caching)
+COPY requirements.txt /requirements.txt
+
+# Upgrade pip and install Python dependencies
+RUN pip3 install -U pip && pip3 install -U -r /requirements.txt
+
+# Set working directory
+WORKDIR /app
+
+# Copy all project files
+COPY . .
+
+# Run bot
+CMD ["python", "bot.py"]
